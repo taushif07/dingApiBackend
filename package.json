@@ -9,19 +9,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mosinbagban/dolby-io-backend-demo.git"
+    "url": "git+https://github.com/taushif07/task-management-backend"
   },
   "keywords": [
     "Dolbyio",
     "nodejs",
     "heroku"
   ],
-  "author": "Mohsin Bagwan",
+  "author": "Taushif Ansari",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mosinbagban/dolby-io-backend-demo/issues"
+    "url": "https://github.com/taushif07/task-management-backend"
   },
-  "homepage": "https://github.com/mosinbagban/dolby-io-backend-demo#readme",
+  "homepage": "https://github.com/taushif07/task-management-backend",
   "dependencies": {
     "@hapi/joi": "^15.0.3",
     "@types/express": "^4.17.20",
