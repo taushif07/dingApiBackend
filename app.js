@@ -29,10 +29,6 @@ console.log("Port: " + port)
 const ID = process.env.ID || '';
 const SECRET = process.env.SECRET || '';
 
-// if (CONSUMER_KEY.length <= 0 || CONSUMER_SECRET.length <= 0) {
-//     throw new Error('The Consumer Key and/or Secret are missing!');
-// }
-
 /**
  * Sends a POST request
  * @param {string} hostname
@@ -113,12 +109,6 @@ app.get('/ding-access-token', function (request, response) {
             response.status(500);
         });
 });
-
-
-
-// server.listen(port,() => {
-//   console.log(`Server running at port `+port);
-// });
 
 var server2 = app.listen(port, function () {
   var host = server2.address().address;
