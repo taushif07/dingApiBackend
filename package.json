@@ -4,7 +4,7 @@
   "description": "Ding-connect-backend-v1",
   "main": "app.js",
   "scripts": {
-    "test": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
   "repository": {
