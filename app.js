@@ -51,10 +51,10 @@ app.get("/", (req, res) => {
 // Serve static files
 app.use(express.static('public'))
 console.log("Port: " + port)
-const CONSUMER_KEY = process.env.CONSUMER_KEY ?? '';
-const CONSUMER_SECRET = process.env.CONSUMER_SECRET ?? '';
-const ID = process.env.ID ?? '';
-const SECRET = process.env.SECRET ?? '';
+const CONSUMER_KEY = process.env.CONSUMER_KEY ? process.env.CONSUMER_KEY :  '';
+const CONSUMER_SECRET = process.env.CONSUMER_SECRET ? process.env.CONSUMER_SECRET : '';
+const ID = process.env.ID ? process.env.ID : '';
+const SECRET = process.env.SECRET ? process.env.SECRET : '';
 
 // if (CONSUMER_KEY.length <= 0 || CONSUMER_SECRET.length <= 0) {
 //     throw new Error('The Consumer Key and/or Secret are missing!');
