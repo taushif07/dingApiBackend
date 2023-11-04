@@ -1,7 +1,7 @@
 {
-  "name": "dolby-io-backend-demo",
+  "name": "ding-connect-backend",
   "version": "1.0.0",
-  "description": "Dolby io backend app for demo",
+  "description": "Ding-connect-backend-v1",
   "main": "app.js",
   "scripts": {
     "test": "node app.js",
@@ -12,7 +12,7 @@
     "url": "git+https://github.com/taushif07/task-management-backend"
   },
   "keywords": [
-    "Dolbyio",
+    "ding-connect",
     "nodejs",
     "heroku"
   ],
