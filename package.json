@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/taushif07/task-management-backend"
+    "url": "git+https://github.com/taushif07/dingApiBackend"
   },
   "keywords": [
     "ding-connect",
@@ -18,9 +18,9 @@
   "author": "Taushif Ansari",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/taushif07/task-management-backend"
+    "url": "https://github.com/taushif07/dingApiBackend"
   },
-  "homepage": "https://github.com/taushif07/task-management-backend",
+  "homepage": "https://github.com/taushif07/dingApiBackend",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
