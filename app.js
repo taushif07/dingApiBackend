@@ -113,5 +113,5 @@ app.get('/ding-access-token', function (request, response) {
 var server2 = app.listen(port, function () {
   var host = server2.address().address;
   var port = server2.address().port;
-  console.log("Dolby.io sample app listening at http://%s:%s", host, port);
+  console.log("Ding connect api backend listening at http://%s:%s", host, port);
 });
