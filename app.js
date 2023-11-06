@@ -150,9 +150,9 @@ app.get("/GetPromotionDescriptions", async function (request, response) {
 
 
 app.get("/GetPromotions", async function (request, response) {
-    const countryIsos = req.body.countryIsos;
-    const providerCodes = req.body.providerCodes;
-    const accountNumber = req.body.accountNumber;
+    const countryIsos = request.body.countryIsos;
+    const providerCodes = request.body.providerCodes;
+    const accountNumber = request.body.accountNumber;
     console.log(`[GET] ${request.url}`);
     try {
         const res = await instance.get(`/api/V1/GetPromotions?countryIsos=${countryIsos}&providerCodes=${providerCodes}&accountNumber=${accountNumber}`);
@@ -218,9 +218,9 @@ app.get("/GetProviderStatus", async function (request, response) {
 });
 
 app.get("/GetProviders", async function (request, response) {
-    const countryIsos = req.body.countryIsos;
-    const regionCodes = req.body.regionCodes;
-    const accountNumber = req.body.accountNumber;
+    const countryIsos = request.body.countryIsos;
+    const regionCodes = request.body.regionCodes;
+    const accountNumber = request.body.accountNumber;
     console.log(`[GET] ${request.url}`);
     try {
         const res = await instance.get(`/api/V1/GetProviders?countryIsos=${countryIsos}&regionCodes=${regionCodes}&accountNumber=${accountNumber}`);
