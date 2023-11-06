@@ -218,9 +218,9 @@ app.get("/GetProviderStatus", async function (request, response) {
 });
 
 app.get("/GetProviders", async function (request, response) {
-    const countryIsos = "IN";
-    const regionCodes = "IN";
-    const accountNumber = "916203962194";
+    const countryIsos = req.body.countryIsos;
+    const regionCodes = req.body.regionCodes;
+    const accountNumber = req.body.accountNumber;
     console.log(`[GET] ${request.url}`);
     try {
         const res = await instance.get(`/api/V1/GetProviders?countryIsos=${countryIsos}&regionCodes=${regionCodes}&accountNumber=${accountNumber}`);
