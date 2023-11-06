@@ -1,4 +1,4 @@
-const axios = require('axios');
+const { default: axios } = require("axios");
 
 const getToken = async() => await axios.get(`${process.env.DING_CONNECT_BACKEND}/ding-access-token`).then((res) => {
     console.log("token",res?.data?.access_token);

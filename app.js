@@ -3,7 +3,6 @@ var express = require('express');
 const https = require("https");
 const dotenv = require('dotenv').config();
 var cors = require('cors');
-const axios = require('axios');
 const instance = require('./dingInstance');
 
 
