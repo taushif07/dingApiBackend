@@ -150,9 +150,9 @@ app.get("/GetPromotionDescriptions", async function (request, response) {
 
 
 app.get("/GetPromotions", async function (request, response) {
-    const countryIsos = "IN";
-    const providerCodes = "RJIN";
-    const accountNumber = "916203962194";
+    const countryIsos = req.body.countryIsos;
+    const providerCodes = req.body.providerCodes;
+    const accountNumber = req.body.accountNumber;
     console.log(`[GET] ${request.url}`);
     try {
         const res = await instance.get(`/api/V1/GetPromotions?countryIsos=${countryIsos}&providerCodes=${providerCodes}&accountNumber=${accountNumber}`);
