@@ -245,9 +245,10 @@ app.post("/GetCurrencies", async function (request, response) {
 });
 
 app.post("/GetRegions", async function (request, response) {
+    const countryIsos = request.body.countryIsos;
     console.log(`[GET] ${request.url}`);
     try {
-        const res = await instance.get('/api/V1/GetRegions');
+        const res = await instance.get(`/api/V1/GetRegions?countryIsos=${countryIsos}`);
         const data = res.data;
         response.json(data);
       } catch (error) {
