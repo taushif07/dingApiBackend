@@ -110,7 +110,7 @@ app.get('/ding-access-token', function (request, response) {
         });
 });
 
-app.get("/GetErrorCodeDescriptions", async function (request, response) {
+app.post("/GetErrorCodeDescriptions", async function (request, response) {
     console.log(`[GET] ${request.url}`);
     try {
         const res = await instance.get(`/api/V1/GetErrorCodeDescriptions`);
@@ -122,8 +122,8 @@ app.get("/GetErrorCodeDescriptions", async function (request, response) {
       }    
 });
 
-app.get("/GetAccountLookup", async function (request, response) {
-    const accountNumber = "916203962194";
+app.post("/GetAccountLookup", async function (request, response) {
+    const accountNumber = request.body.accountNumber;
     console.log(`[GET] ${request.url}`);
     try {
         const res = await instance.get(`/api/V1/GetAccountLookup?accountNumber=${accountNumber}`);
@@ -135,8 +135,8 @@ app.get("/GetAccountLookup", async function (request, response) {
       }    
 });
 
-app.get("/GetPromotionDescriptions", async function (request, response) {
-    const languageCodes = "en"
+app.post("/GetPromotionDescriptions", async function (request, response) {
+    const languageCodes = request.body.languageCodes;
     console.log(`[GET] ${request.url}`);
     try {
         const res = await instance.get(`/api/V1/GetPromotionDescriptions?languageCodes=${languageCodes}`);
@@ -149,7 +149,7 @@ app.get("/GetPromotionDescriptions", async function (request, response) {
 });
 
 
-app.get("/GetPromotions", async function (request, response) {
+app.post("/GetPromotions", async function (request, response) {
     const countryIsos = request.body.countryIsos;
     const providerCodes = request.body.providerCodes;
     const accountNumber = request.body.accountNumber;
@@ -164,7 +164,7 @@ app.get("/GetPromotions", async function (request, response) {
       }    
 });
 
-app.get("/GetBalance", async function (request, response) {
+app.post("/GetBalance", async function (request, response) {
     console.log(`[GET] ${request.url}`);
     try {
         const res = await instance.get(`/api/V1/GetBalance`);
@@ -176,8 +176,8 @@ app.get("/GetBalance", async function (request, response) {
       }    
 });
 
-app.get("/GetProductDescriptions", async function (request, response) {
-    const skuCodes = "RJININ80851"
+app.post("/GetProductDescriptions", async function (request, response) {
+    const skuCodes = request.body.skuCodes;
     console.log(`[GET] ${request.url}`);
     try {
         const res = await instance.get(`/api/V1/GetProductDescriptions?skuCodes=${skuCodes}`);
@@ -189,10 +189,10 @@ app.get("/GetProductDescriptions", async function (request, response) {
       }    
 });
 
-app.get("/GetProducts", async function (request, response) {
-    const providerCodes = "RJIN";
-    const countryIsos = "IN";
-    const regionCodes = "IN";
+app.post("/GetProducts", async function (request, response) {
+    const providerCodes = request.body.providerCodes;
+    const countryIsos = request.body.countryIsos;
+    const regionCodes = request.body.regionCodes;
     console.log(`[GET] ${request.url}`);
     try {
         const res = await instance.get(`/api/V1/GetProducts?countryIsos=${countryIsos}&providerCodes=${providerCodes}&regionCodes=${regionCodes}`);
@@ -204,8 +204,8 @@ app.get("/GetProducts", async function (request, response) {
       }    
 });
 
-app.get("/GetProviderStatus", async function (request, response) {
-    const providerCodes = "RJIN"
+app.post("/GetProviderStatus", async function (request, response) {
+    const providerCodes = request.body.providerCodes;
     console.log(`[GET] ${request.url}`);
     try {
         const res = await instance.get(`/api/V1/GetProviderStatus?providerCodes=${providerCodes}`);
@@ -217,7 +217,7 @@ app.get("/GetProviderStatus", async function (request, response) {
       }    
 });
 
-app.get("/GetProviders", async function (request, response) {
+app.post("/GetProviders", async function (request, response) {
     const countryIsos = request.body.countryIsos;
     const regionCodes = request.body.regionCodes;
     const accountNumber = request.body.accountNumber;
@@ -232,7 +232,7 @@ app.get("/GetProviders", async function (request, response) {
       }    
 });
 
-app.get("/GetCurrencies", async function (request, response) {
+app.post("/GetCurrencies", async function (request, response) {
     console.log(`[GET] ${request.url}`);
     try {
         const res = await instance.get('/api/V1/GetCurrencies');
@@ -244,7 +244,7 @@ app.get("/GetCurrencies", async function (request, response) {
       }    
 });
 
-app.get("/GetRegions", async function (request, response) {
+app.post("/GetRegions", async function (request, response) {
     console.log(`[GET] ${request.url}`);
     try {
         const res = await instance.get('/api/V1/GetRegions');
@@ -256,7 +256,7 @@ app.get("/GetRegions", async function (request, response) {
       }    
 });
 
-app.get("/GetCountries", async function (request, response) {
+app.post("/GetCountries", async function (request, response) {
     console.log(`[GET] ${request.url}`);
     try {
         const res = await instance.get('/api/V1/GetCountries');
