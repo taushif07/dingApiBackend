@@ -1,7 +1,7 @@
 const { default: axios } = require("axios");
 
 const getToken = async() => await axios.get(`${process.env.DING_CONNECT_BACKEND}/ding-access-token`).then((res) => {
-    console.log("token",res?.data?.access_token);
+    // console.log("token",res?.data?.access_token);
     return res?.data?.access_token;
 });
 
@@ -19,7 +19,7 @@ instance.interceptors.request.use(
             config.headers.Authorization = `Bearer ${res}`;
             config.headers.Accept = "application/json";
         });
-        console.log("config",config.headers);
+        // console.log("config",config.headers);
         return config;
     },
     error => Promise.reject(error)

@@ -110,7 +110,7 @@ app.get('/ding-access-token', function (request, response) {
         });
 });
 
-app.post("/GetErrorCodeDescriptions", async function (request, response) {
+app.get("/GetErrorCodeDescriptions", async function (request, response) {
     console.log(`[GET] ${request.url}`);
     try {
         const res = await instance.get(`/api/V1/GetErrorCodeDescriptions`);
@@ -164,7 +164,7 @@ app.post("/GetPromotions", async function (request, response) {
       }    
 });
 
-app.post("/GetBalance", async function (request, response) {
+app.get("/GetBalance", async function (request, response) {
     console.log(`[GET] ${request.url}`);
     try {
         const res = await instance.get(`/api/V1/GetBalance`);
@@ -232,7 +232,7 @@ app.post("/GetProviders", async function (request, response) {
       }    
 });
 
-app.post("/GetCurrencies", async function (request, response) {
+app.get("/GetCurrencies", async function (request, response) {
     console.log(`[GET] ${request.url}`);
     try {
         const res = await instance.get('/api/V1/GetCurrencies');
@@ -257,7 +257,7 @@ app.post("/GetRegions", async function (request, response) {
       }    
 });
 
-app.post("/GetCountries", async function (request, response) {
+app.get("/GetCountries", async function (request, response) {
     console.log(`[GET] ${request.url}`);
     try {
         const res = await instance.get('/api/V1/GetCountries');
