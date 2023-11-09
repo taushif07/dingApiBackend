@@ -224,9 +224,15 @@ app.post("/GetProviders", async function (request, response) {
     const accountNumber = request.body.accountNumber;
     console.log(`[GET] ${request.url}`);
     try {
+      if(accountNumber && accountNumber?.length>0){
         const res = await instance.get(`/api/V1/GetProviders?countryIsos=${countryIsos}&regionCodes=${regionCodes}&accountNumber=${accountNumber}`);
         const data = res.data;
         response.json(data);
+      } else {
+        const res = await instance.get(`/api/V1/GetProviders?countryIsos=${countryIsos}&regionCodes=${regionCodes}`);
+        const data = res.data;
+        response.json(data);
+      }
       } catch (error) {
         console.error(error);
         response.status(500).json({ message: 'Internal Server Error' });
