@@ -178,9 +178,10 @@ app.get("/GetBalance", async function (request, response) {
 
 app.post("/GetProductDescriptions", async function (request, response) {
     const skuCodes = request.body.skuCodes;
+    const languageCodes = request.body.languageCodes;
     console.log(`[GET] ${request.url}`);
     try {
-        const res = await instance.get(`/api/V1/GetProductDescriptions?skuCodes=${skuCodes}`);
+        const res = await instance.get(`/api/V1/GetProductDescriptions?languageCodes=${languageCodes}&skuCodes=${skuCodes}`);
         const data = res.data;
         response.json(data);
       } catch (error) {
