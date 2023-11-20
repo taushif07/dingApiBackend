@@ -80,7 +80,7 @@ const postAsync = (hostname, path, headers, body) => {
 const getDingAccessToken = (hostname, path) => {
     const body = `client_id=${ID}&client_secret=${SECRET}&grant_type=client_credentials`;
 
-    console.log('ID: ' + ID);
+    // console.log('ID: ' + ID);
     const headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Access-Control-Allow-Origin':'*',
@@ -295,17 +295,36 @@ app.post("/SendTransfer", async function (request, response) {
     "DistributorRef": DistributorRef,
     "ValidateOnly": ValidateOnly,
     "SendCurrencyIso": SendCurrencyIso,
-  }
+  };
+
+  const headers = {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin':'*',
+      'Cache-Control': 'no-cache',
+  };
+
+  const hostname = `${process.env.DING_BASE_URL}`;
+
+  const path = `/api/V1/SendTransfer`
 
   console.log(`[POST] ${request.url}`);
   try {
-      const res = await instance.post(`/api/V1/SendTransfer`,payload);
-      const data = res.data;
-      response.json(data);
+      await postAsync(hostname, path, headers, payload).then((res) => {
+        response.set('Content-Type', 'application/json');
+        response.send(JSON.stringify(res));
+      });
     } catch (error) {
       console.error(error);
       response.status(500).json({ message: 'Internal Server Error' });
-    }    
+    }   
+    // try {
+    //   const res = await instance.post(`/api/V1/SendTransfer`,payload);
+    //   const data = res.data;
+    //   response.json(data);
+    // } catch (error) {
+    //   console.error(error);
+    //   response.status(500).json({ message: 'Internal Server Error' });
+    // }  
 });
 
 var server2 = app.listen(port, function () {
