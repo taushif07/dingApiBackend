@@ -1,13 +1,16 @@
 const { default: axios } = require("axios");
 
-const getToken = async() => await axios.get(`${process.env.DING_CONNECT_BACKEND}/ding-access-token`).then((res) => {
-    // console.log("token",res?.data?.access_token);
-    return res?.data?.access_token;
-});
+// const getToken = async() => await axios.get(`${process.env.DING_CONNECT_BACKEND}/ding-access-token`).then((res) => {
+//     // console.log("token",res?.data?.access_token);
+//     return res?.data?.access_token;
+// });
 
 const instance = axios.create({
     
     baseURL: `${process.env.DING_BASE_URL}`,
+    headers: {
+    "api_key": "0nusPI9GwNS5seIELKiCOy"
+    }
 
 });
 
@@ -15,11 +18,12 @@ const instance = axios.create({
 instance.interceptors.request.use(
     async (config) => {
 
-        await getToken().then(res => {
-            config.headers.Authorization = `Bearer ${res}`;
-            config.headers.Accept = "application/json";
-        });
+        // await getToken().then(res => {
+        //     config.headers.Authorization = `Bearer ${res}`;
+        //     config.headers.Accept = "application/json";
+        // });
         // console.log("config",config.headers);
+        config.headers.Accept = "application/json";
         return config;
     },
     error => Promise.reject(error)
