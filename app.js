@@ -110,6 +110,8 @@ app.get('/ding-access-token', function (request, response) {
         });
 });
 
+//Ding Get APIs
+
 app.get("/GetErrorCodeDescriptions", async function (request, response) {
     console.log(`[GET] ${request.url}`);
     try {
@@ -274,6 +276,36 @@ app.get("/GetCountries", async function (request, response) {
         console.error(error);
         response.status(500).json({ message: 'Internal Server Error' });
       }
+});
+
+//Ding post APIs
+
+app.post("/SendTransfer", async function (request, response) {
+  const SkuCode  = request.body.SkuCode;
+  const SendValue = request.body.SendValue;
+  const AccountNumber = request.body.AccountNumber;
+  const DistributorRef = request.body.DistributorRef;
+  const ValidateOnly = request.body.ValidateOnly;
+  const UatNumber = request.body.UatNumber;
+
+  const payload = {
+    "SkuCode" : SkuCode,
+    "SendValue" : SendValue,
+    "AccountNumber": AccountNumber,
+    "DistributorRef": DistributorRef,
+    "ValidateOnly": ValidateOnly,
+    "UatNumber": UatNumber
+  }
+
+  console.log(`[POST] ${request.url}`);
+  try {
+      const res = await instance.post(`/api/V1/SendTransfer`,payload);
+      const data = res.data;
+      response.json(data);
+    } catch (error) {
+      console.error(error);
+      response.status(500).json({ message: 'Internal Server Error' });
+    }    
 });
 
 var server2 = app.listen(port, function () {
