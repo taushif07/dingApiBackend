@@ -283,18 +283,16 @@ app.get("/GetCountries", async function (request, response) {
 app.post("/SendTransfer", async function (request, response) {
   const SkuCode  = request.body.SkuCode;
   const SendValue = request.body.SendValue;
-  // const AccountNumber = request.body.AccountNumber;
+  const AccountNumber = request.body.AccountNumber;
   const DistributorRef = request.body.DistributorRef;
   const ValidateOnly = request.body.ValidateOnly;
-  const UatNumber = request.body.UatNumber;
 
   const payload = {
     "SkuCode" : SkuCode,
     "SendValue" : SendValue,
-    "AccountNumber": UatNumber,
+    "AccountNumber": AccountNumber,
     "DistributorRef": DistributorRef,
     "ValidateOnly": ValidateOnly,
-    // "UatNumber": UatNumber
   }
 
   console.log(`[POST] ${request.url}`);
