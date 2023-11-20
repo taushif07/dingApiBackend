@@ -286,6 +286,7 @@ app.post("/SendTransfer", async function (request, response) {
   const AccountNumber = request.body.AccountNumber;
   const DistributorRef = request.body.DistributorRef;
   const ValidateOnly = request.body.ValidateOnly;
+  const SendCurrencyIso = request.body.SendCurrencyIso;
 
   const payload = {
     "SkuCode" : SkuCode,
@@ -293,6 +294,7 @@ app.post("/SendTransfer", async function (request, response) {
     "AccountNumber": AccountNumber,
     "DistributorRef": DistributorRef,
     "ValidateOnly": ValidateOnly,
+    "SendCurrencyIso": SendCurrencyIso,
   }
 
   console.log(`[POST] ${request.url}`);
