@@ -300,17 +300,17 @@ app.post("/SendTransfer", async function (request, response) {
   const SendCurrencyIso = request.body.SendCurrencyIso;
 
   const payload = {
-    "SkuCode" : SkuCode,
-    "SendValue" : SendValue,
-    "AccountNumber": AccountNumber,
-    "DistributorRef": DistributorRef,
+    "SkuCode" : SkuCode.toString(),
+    "SendValue" : Number(SendValue),
+    "AccountNumber": AccountNumber.toString(),
+    "DistributorRef": DistributorRef.toString(),
     "ValidateOnly": ValidateOnly,
-    "SendCurrencyIso": SendCurrencyIso,
+    "SendCurrencyIso": SendCurrencyIso.toString(),
   };
   // const payload = {
   //       "SkuCode" : "RJININ80851",
   //       "SendValue" : 0.9,
-  //       "AccountNumber": '910000000000',
+  //       "AccountNumber": "910000000000",
   //       "DistributorRef": "123",
   //       "ValidateOnly": false,
   //       "SendCurrencyIso": "USD",
