@@ -296,35 +296,45 @@ app.post("/SendTransfer", async function (request, response) {
     "ValidateOnly": ValidateOnly,
     "SendCurrencyIso": SendCurrencyIso,
   };
+  // const payload = {
+  //       "SkuCode" : "RJININ80851",
+  //       "SendValue" : 0.9,
+  //       "AccountNumber": '910000000000',
+  //       "DistributorRef": "123",
+  //       "ValidateOnly": false,
+  //       "SendCurrencyIso": "USD",
+  // }
 
-  const headers = {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin':'*',
-      'Cache-Control': 'no-cache',
-  };
+ console.log("payload",payload);
 
-  const hostname = `${process.env.DING_BASE_URL}`;
+  // const headers = {
+  //     'Content-Type': 'application/json',
+  //     'Access-Control-Allow-Origin':'*',
+  //     'Cache-Control': 'no-cache',
+  // };
 
-  const path = `/api/V1/SendTransfer`
+  // const hostname = `${process.env.DING_BASE_URL}`;
 
-  console.log(`[POST] ${request.url}`);
-  try {
-      await postAsync(hostname, path, headers, payload).then((res) => {
-        response.set('Content-Type', 'application/json');
-        response.send(JSON.stringify(res));
-      });
+  // const path = `/api/V1/SendTransfer`
+
+  // console.log(`[POST] ${request.url}`);
+  // try {
+  //     await postAsync(hostname, path, headers, payload).then((res) => {
+  //       response.set('Content-Type', 'application/json');
+  //       response.send(JSON.stringify(res));
+  //     });
+  //   } catch (error) {
+  //     console.error(error);
+  //     response.status(500).json({ message: 'Internal Server Error' });
+  //   }   
+    try {
+      const res = await instance.post(`/api/V1/SendTransfer`,payload);
+      const data = res.data;
+      response.json(data);
     } catch (error) {
       console.error(error);
       response.status(500).json({ message: 'Internal Server Error' });
-    }   
-    // try {
-    //   const res = await instance.post(`/api/V1/SendTransfer`,payload);
-    //   const data = res.data;
-    //   response.json(data);
-    // } catch (error) {
-    //   console.error(error);
-    //   response.status(500).json({ message: 'Internal Server Error' });
-    // }  
+    }  
 });
 
 var server2 = app.listen(port, function () {

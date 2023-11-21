@@ -9,7 +9,7 @@ const instance = axios.create({
     
     baseURL: `${process.env.DING_BASE_URL}`,
     // headers: {
-    // "api_key": ""
+    // "api_key": `${process.env.DING_API_KEY}`
     // }
 
 });
