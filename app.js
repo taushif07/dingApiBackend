@@ -301,12 +301,12 @@ app.post("/SendTransfer", async function (request, response) {
   const SendCurrencyIso = request.body.SendCurrencyIso;
 
   const payload = {
-    "SkuCode" : SkuCode.toString(),
-    "SendValue" : Number(SendValue),
-    "AccountNumber": AccountNumber.toString(),
-    "DistributorRef": DistributorRef.toString(),
+    "SkuCode" : SkuCode,
+    "SendValue" : SendValue,
+    "AccountNumber": AccountNumber,
+    "DistributorRef": DistributorRef,
     "ValidateOnly": ValidateOnly,
-    "SendCurrencyIso": SendCurrencyIso.toString(),
+    "SendCurrencyIso": SendCurrencyIso,
   };
   // const payload = {
   //       "SkuCode" : "RJININ80851",
