@@ -280,6 +280,17 @@ app.get("/GetCountries", async function (request, response) {
 
 //Ding post APIs
 
+const sendTransferPostAsync = async(payload) => {
+    try {
+      const res = await instance.post(`/api/V1/SendTransfer`,payload);
+      const data = res.data;
+      return data;
+    } catch (error) {
+      console.error(error);
+      return error;
+    } 
+}
+
 app.post("/SendTransfer", async function (request, response) {
   const SkuCode  = request.body.SkuCode;
   const SendValue = request.body.SendValue;
@@ -327,14 +338,21 @@ app.post("/SendTransfer", async function (request, response) {
   //     console.error(error);
   //     response.status(500).json({ message: 'Internal Server Error' });
   //   }   
-    try {
-      const res = await instance.post(`/api/V1/SendTransfer`,payload);
-      const data = res.data;
-      response.json(data);
-    } catch (error) {
-      console.error(error);
-      response.status(500).json({ message: 'Internal Server Error' });
-    }  
+
+  await sendTransferPostAsync(payload).then((res) => {
+    response.json(res);
+  }).catch((error) => {
+    console.error(error);
+    response.status(500).json({ message: 'Internal Server Error' });
+  })
+    // try {
+    //   const res = await instance.post(`/api/V1/SendTransfer`,payload);
+    //   const data = res.data;
+    //   response.json(data);
+    // } catch (error) {
+    //   console.error(error);
+    //   response.status(500).json({ message: 'Internal Server Error' });
+    // }  
 });
 
 var server2 = app.listen(port, function () {
