@@ -291,31 +291,31 @@ const sendTransferPostAsync = async(payload) => {
     } 
 }
 
-app.get("/SendTransfer", async function (request, response) {
-  console.log(`[GET] ${request.url}`);
-  // const SkuCode  = request.body.SkuCode;
-  // const SendValue = request.body.SendValue;
-  // const AccountNumber = request.body.AccountNumber;
-  // const DistributorRef = request.body.DistributorRef;
-  // const ValidateOnly = request.body.ValidateOnly;
-  // const SendCurrencyIso = request.body.SendCurrencyIso;
+app.post("/SendTransfer", async function (request, response) {
+  // console.log(`[GET] ${request.url}`);
+  const SkuCode  = request.body.SkuCode;
+  const SendValue = request.body.SendValue;
+  const AccountNumber = request.body.AccountNumber;
+  const DistributorRef = request.body.DistributorRef;
+  const ValidateOnly = request.body.ValidateOnly;
+  const SendCurrencyIso = request.body.SendCurrencyIso;
 
-  // const payload = {
-  //   "SkuCode" : SkuCode.toString(),
-  //   "SendValue" : Number(SendValue),
-  //   "AccountNumber": AccountNumber.toString(),
-  //   "DistributorRef": DistributorRef.toString(),
-  //   "ValidateOnly": ValidateOnly,
-  //   "SendCurrencyIso": SendCurrencyIso.toString(),
-  // };
   const payload = {
-        "SkuCode" : "RJININ80851",
-        "SendValue" : 0.9,
-        "AccountNumber": "910000000000",
-        "DistributorRef": "123",
-        "ValidateOnly": false,
-        "SendCurrencyIso": "USD",
-  }
+    "SkuCode" : SkuCode.toString(),
+    "SendValue" : Number(SendValue),
+    "AccountNumber": AccountNumber.toString(),
+    "DistributorRef": DistributorRef.toString(),
+    "ValidateOnly": ValidateOnly,
+    "SendCurrencyIso": SendCurrencyIso.toString(),
+  };
+  // const payload = {
+  //       "SkuCode" : "RJININ80851",
+  //       "SendValue" : 0.9,
+  //       "AccountNumber": "910000000000",
+  //       "DistributorRef": "123",
+  //       "ValidateOnly": false,
+  //       "SendCurrencyIso": "USD",
+  // }
 
  console.log("payload",payload);
 
