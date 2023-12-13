@@ -156,15 +156,11 @@ app.get('/amadeus-access-token', function (request, response) {
 
 //AMADEUS GET APIs
 
-app.get("/shopping/flight-offers", async function (request, response) {
+app.post("/shopping/flight-offers", async function (request, response) {
   const destinationLocationCode = request.body.destinationLocationCode;
   const originLocationCode = request.body.originLocationCode;
   const adults = request.body.adults;
   const departureDate = request.body.departureDate;
-  // const destinationLocationCode = "SYD";
-  // const originLocationCode = "BKK";
-  // const adults = 1;
-  // const departureDate = "2024-01-02";
   try {
       const res = await amadeusInstance.get(`/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=${adults}`);
       const data = res.data;
@@ -173,6 +169,159 @@ app.get("/shopping/flight-offers", async function (request, response) {
       console.error(error);
       response.status(500).json({ message: 'Internal Server Error' });
     }    
+})
+
+//AMADEUS POST APIs
+
+const amadeusFlightBookingPostAsync = async(endpoint,payload) => {
+  try {
+    const res = await amadeusInstance.post(endpoint,payload);
+    const data = res.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+    return error;
+  } 
+}
+
+app.post("/shopping/flight-offers/pricing", async function (request, response) {
+
+  const flightOfferData = request.body.flightOfferData;
+
+  const payload = {
+    "data": {
+      "type": "flight-offers-pricing",
+      "flightOffers": [
+        flightOfferData
+      ]
+  }
+  };
+
+  await amadeusFlightBookingPostAsync(`/shopping/flight-offers/pricing`,payload).then((res) => {
+    response.json(res);
+  }).catch((error) => {
+    console.error(error);
+    response.status(500).json({ message: 'Internal Server Error' });
+  })
+
+});
+
+app.post("/booking/flight-orders", async function(request, response) {
+  const flightOfferPriceData = request.body.flightOfferPriceData;
+
+  const payload = {
+    "data": {
+      "type": "flight-order",
+      "flightOffers": [
+          flightOfferPriceData
+      ],
+      "travelers": [
+        {
+          "id": "1",
+          "dateOfBirth": "1982-01-16",
+          "name": {
+            "firstName": "JORGE",
+            "lastName": "GONZALES"
+          },
+          "gender": "MALE",
+          "contact": {
+            "emailAddress": "jorge.gonzales833@telefonica.es",
+            "phones": [
+              {
+                "deviceType": "MOBILE",
+                "countryCallingCode": "34",
+                "number": "480080076"
+              }
+            ]
+          },
+          "documents": [
+            {
+              "documentType": "PASSPORT",
+              "birthPlace": "Madrid",
+              "issuanceLocation": "Madrid",
+              "issuanceDate": "2015-04-14",
+              "number": "00000000",
+              "expiryDate": "2025-04-14",
+              "issuanceCountry": "ES",
+              "validityCountry": "ES",
+              "nationality": "ES",
+              "holder": true
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "dateOfBirth": "2012-10-11",
+          "gender": "FEMALE",
+          "contact": {
+            "emailAddress": "jorge.gonzales833@telefonica.es",
+            "phones": [
+              {
+                "deviceType": "MOBILE",
+                "countryCallingCode": "34",
+                "number": "480080076"
+              }
+            ]
+          },
+          "name": {
+            "firstName": "ADRIANA",
+            "lastName": "GONZALES"
+          }
+        }
+      ],
+      "remarks": {
+        "general": [
+          {
+            "subType": "GENERAL_MISCELLANEOUS",
+            "text": "ONLINE BOOKING FROM INCREIBLE VIAJES"
+          }
+        ]
+      },
+      "ticketingAgreement": {
+        "option": "DELAY_TO_CANCEL",
+        "delay": "6D"
+      },
+      "contacts": [
+        {
+          "addresseeName": {
+            "firstName": "PABLO",
+            "lastName": "RODRIGUEZ"
+          },
+          "companyName": "INCREIBLE VIAJES",
+          "purpose": "STANDARD",
+          "phones": [
+            {
+              "deviceType": "LANDLINE",
+              "countryCallingCode": "34",
+              "number": "480080071"
+            },
+            {
+              "deviceType": "MOBILE",
+              "countryCallingCode": "33",
+              "number": "480080072"
+            }
+          ],
+          "emailAddress": "support@increibleviajes.es",
+          "address": {
+            "lines": [
+              "Calle Prado, 16"
+            ],
+            "postalCode": "28014",
+            "cityName": "Madrid",
+            "countryCode": "ES"
+          }
+        }
+      ]
+    }
+  };
+
+  await amadeusFlightBookingPostAsync(`/booking/flight-orders`,payload).then((res) => {
+    response.json(res);
+  }).catch((error) => {
+    console.error(error);
+    response.status(500).json({ message: 'Internal Server Error' });
+  });
+
 })
 
 
