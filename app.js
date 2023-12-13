@@ -4,6 +4,7 @@ const https = require("https");
 const dotenv = require('dotenv').config();
 var cors = require('cors');
 const instance = require('./dingInstance');
+const amadeusInstance = require("./amadeusInstance");
 
 
 const port = process.env.PORT || 3000;
@@ -28,6 +29,8 @@ app.use(express.static('public'))
 console.log("Port: " + port)
 const ID = process.env.ID || '';
 const SECRET = process.env.SECRET || '';
+const AMADEUS_ID = process.env.AMADEUS_ID || '';
+const AMADEUS_SECRET = process.env.AMADEUS_SECRET || '';
 
 /**
  * Sends a POST request
@@ -91,9 +94,35 @@ const getDingAccessToken = (hostname, path) => {
     return postAsync(hostname, path, headers, body);
 }
 
+/**
+ * Gets a JWT token for authorization.
+ * @param {string} hostname 
+ * @param {string} path 
+ * @returns a JWT token.
+ */
+const getAmadeusAccessToken = (hostname, path) => {
+  const body = `grant_type=client_credentials&client_id=${AMADEUS_ID}&client_secret=${AMADEUS_SECRET}&grant_type=client_credentials`;
+
+  // console.log('ID: ' + ID);
+  const headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Access-Control-Allow-Origin':'*',
+      'Cache-Control': 'no-cache',
+      'Content-Length': body.length
+  };
+
+  return postAsync(hostname, path, headers, body);
+}
+
 const getDingAccessTokenAsync = () => {
     console.log('Get Ding Access Token');
     return getDingAccessToken('idp.ding.com', '/connect/token');
+
+}
+
+const getAmadeusAccessTokenAsync = () => {
+  console.log('Get Amadeus Access Token');
+  return getAmadeusAccessToken('test.api.amadeus.com', '/v1/security/oauth2/token');
 
 }
 
@@ -109,6 +138,43 @@ app.get('/ding-access-token', function (request, response) {
             response.status(500);
         });
 });
+
+
+app.get('/amadeus-access-token', function (request, response) {
+  console.log(`[GET] ${request.url}`);
+
+  getAmadeusAccessTokenAsync()
+      .then(accessToken => {
+          response.set('Content-Type', 'application/json');
+          response.send(JSON.stringify(accessToken));
+      })
+      .catch(() => {
+          response.status(500);
+      });
+});
+
+
+//AMADEUS GET APIs
+
+app.get("/shopping/flight-offers", async function (request, response) {
+  const destinationLocationCode = request.body.destinationLocationCode;
+  const originLocationCode = request.body.originLocationCode;
+  const adults = request.body.adults;
+  const departureDate = request.body.departureDate;
+  // const destinationLocationCode = "SYD";
+  // const originLocationCode = "BKK";
+  // const adults = 1;
+  // const departureDate = "2024-01-02";
+  try {
+      const res = await amadeusInstance.get(`/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=${adults}`);
+      const data = res.data;
+      response.json(data);
+    } catch (error) {
+      console.error(error);
+      response.status(500).json({ message: 'Internal Server Error' });
+    }    
+})
+
 
 //Ding Get APIs
 
@@ -345,7 +411,7 @@ app.post("/SendTransfer", async function (request, response) {
   }).catch((error) => {
     console.error(error);
     response.status(500).json({ message: 'Internal Server Error' });
-  })
+  });
     // try {
     //   const res = await instance.post(`/api/V1/SendTransfer`,payload);
     //   const data = res.data;
