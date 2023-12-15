@@ -157,14 +157,26 @@ app.get('/amadeus-access-token', function (request, response) {
 //AMADEUS GET APIs
 
 app.post("/shopping/flight-offers", async function (request, response) {
-  const destinationLocationCode = request.body.destinationLocationCode;
-  const originLocationCode = request.body.originLocationCode;
-  const adults = request.body.adults;
-  const departureDate = request.body.departureDate;
+  const destinationLocationCode = request?.body?.destinationLocationCode;
+  const originLocationCode = request?.body?.originLocationCode;
+  const adults = request?.body?.adults;
+  const departureDate = request?.body?.departureDate;
+  const returnDate = request?.body?.returnDate;
+  const children = request?.body?.children ? request?.body?.children : 0;
+  const infants = request?.body?.infants ? request?.body?.infants : 0; 
+  const travelClass = request?.body?.travelClass ? request?.body?.travelClass : "";
+  const nonStop = request?.body?.nonStop;
+  const max = request?.body?.max;
   try {
-      const res = await amadeusInstance.get(`/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=${adults}`);
+    if(request?.body?.returnDate){
+      const res = await amadeusInstance.get(`/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&returnDate=${returnDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}`);
       const data = res.data;
       response.json(data);
+    } else {
+      const res = await amadeusInstance.get(`/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}`);
+      const data = res.data;
+      response.json(data);
+    }
     } catch (error) {
       console.error(error);
       response.status(500).json({ message: 'Internal Server Error' });
