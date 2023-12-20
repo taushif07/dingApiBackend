@@ -8,7 +8,7 @@ const getToken = async() => await axios.get(`${process.env.DING_CONNECT_BACKEND}
 const amadeusInstance = axios.create({
     
     baseURL: `${process.env.AMADEUS_BASE_URL}`,
-
+    
 });
 
 
@@ -18,6 +18,7 @@ amadeusInstance.interceptors.request.use(
         await getToken().then(res => {
             config.headers.Authorization = `Bearer ${res}`;
             config.headers.Accept = "application/json";
+            config.headers['X-HTTP-Method-Override'] = 'GET';
         });
         // console.log("config",config.headers);
         // config.headers.Accept = "application/json";
