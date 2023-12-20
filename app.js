@@ -200,16 +200,16 @@ app.post("/shopping/flight-offers/pricing", async function (request, response) {
 
   const flightOfferData = request.body.flightOfferData;
 
-  const payload = {
+  const payload = JSON.stringify({
     "data": {
       "type": "flight-offers-pricing",
       "flightOffers": [
         flightOfferData
       ]
   }
-  };
+  });
 
-  await amadeusFlightBookingPostAsync(`/shopping/flight-offers/pricing`,payload).then((res) => {
+  await amadeusFlightBookingPostAsync(`/shopping/flight-offers/pricing`, payload).then((res) => {
     response.json(res);
   }).catch((error) => {
     console.error(error);
