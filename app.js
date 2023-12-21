@@ -227,7 +227,7 @@ app.post("/shopping/flight-offers/pricing", async function (request, response) {
 app.post("/booking/flight-orders", async function (request, response) {
   const flightOfferPriceData = request.body.flightOfferPriceData;
 
-  const payload = {
+  const payload = JSON.stringify({
     data: {
       type: "flight-order",
       flightOffers: [flightOfferPriceData],
@@ -365,7 +365,7 @@ app.post("/booking/flight-orders", async function (request, response) {
         },
       ],
     },
-  };
+  });
 
   await amadeusFlightBookingPostAsync(`/v1/booking/flight-orders`, payload)
     .then((res) => {
