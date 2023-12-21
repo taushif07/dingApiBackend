@@ -171,13 +171,13 @@ app.post("/shopping/flight-offers", async function (request, response) {
   try {
     if (request?.body?.returnDate) {
       const res = await amadeusInstance.get(
-        `/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&returnDate=${returnDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}`
+        `/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&returnDate=${returnDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}`
       );
       const data = res.data;
       response.json(data);
     } else {
       const res = await amadeusInstance.get(
-        `/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}`
+        `/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}`
       );
       const data = res.data;
       response.json(data);
@@ -205,12 +205,14 @@ app.post("/shopping/flight-offers/pricing", async function (request, response) {
   const flightOfferData = request.body.flightOfferData;
 
   const payload = JSON.stringify({
-    type: "flight-offers-pricing",
-    flightOffers: [flightOfferData],
+    data: {
+      type: "flight-offers-pricing",
+      flightOffers: [flightOfferData],
+    },
   });
 
   await amadeusFlightBookingPostAsync(
-    `/shopping/flight-offers/pricing`,
+    `/v1/shopping/flight-offers/pricing`,
     payload
   )
     .then((res) => {
@@ -327,7 +329,7 @@ app.post("/booking/flight-orders", async function (request, response) {
     },
   };
 
-  await amadeusFlightBookingPostAsync(`/booking/flight-orders`, payload)
+  await amadeusFlightBookingPostAsync(`/v1/booking/flight-orders`, payload)
     .then((res) => {
       response.json(res);
     })
