@@ -321,7 +321,7 @@ app.post("/booking/flight-orders", async function (request, response) {
             firstName: "ADRIANA",
             lastName: "GONZALES",
           },
-        }
+        },
       ],
       remarks: {
         general: [
