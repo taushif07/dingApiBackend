@@ -5,6 +5,7 @@ const dotenv = require("dotenv").config();
 var cors = require("cors");
 const instance = require("./dingInstance");
 const amadeusInstance = require("./amadeusInstance");
+const amadeusPostInstance = require("./amadeusPostInstance");
 
 const port = process.env.PORT || 3000;
 
@@ -190,9 +191,9 @@ app.post("/shopping/flight-offers", async function (request, response) {
 
 //AMADEUS POST APIs
 
-const amadeusFlightBookingPostAsync = async (endpoint, payload) => {
+const amadeusFlightBookingPostAsync = async (instance,endpoint, payload) => {
   try {
-    const res = await amadeusInstance.post(endpoint, payload);
+    const res = await instance.post(endpoint, payload);
     const data = res.data;
     return data;
   } catch (error) {
@@ -200,6 +201,8 @@ const amadeusFlightBookingPostAsync = async (endpoint, payload) => {
     return error;
   }
 };
+
+
 
 app.post("/shopping/flight-offers/pricing", async function (request, response) {
   const flightOfferData = request.body.flightOfferData;
@@ -212,6 +215,7 @@ app.post("/shopping/flight-offers/pricing", async function (request, response) {
   });
 
   await amadeusFlightBookingPostAsync(
+    amadeusInstance,
     `/v1/shopping/flight-offers/pricing?forceClass=false`,
     payload
   )
@@ -367,7 +371,7 @@ app.post("/booking/flight-orders", async function (request, response) {
     },
   });
 
-  await amadeusFlightBookingPostAsync(`/v1/booking/flight-orders`, payload)
+  await amadeusFlightBookingPostAsync(amadeusPostInstance,`/v1/booking/flight-orders`, payload)
     .then((res) => {
       response.json(res);
     })
