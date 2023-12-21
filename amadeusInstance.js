@@ -18,6 +18,7 @@ amadeusInstance.interceptors.request.use(
         await getToken().then(res => {
             config.headers.Authorization = `Bearer ${res}`;
             config.headers.Accept = "application/json";
+            config.headers["Content-Type"] = "application/json";
             config.headers['X-HTTP-Method-Override'] = 'GET';
         });
         // console.log("config",config.headers);
