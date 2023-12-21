@@ -284,6 +284,44 @@ app.post("/booking/flight-orders", async function (request, response) {
             lastName: "GONZALES",
           },
         },
+        {
+          id: "3",
+          dateOfBirth: "2018-10-11",
+          gender: "FEMALE",
+          contact: {
+            emailAddress: "jorge.gonzales833@telefonica.es",
+            phones: [
+              {
+                deviceType: "MOBILE",
+                countryCallingCode: "34",
+                number: "480080076",
+              },
+            ],
+          },
+          name: {
+            firstName: "ADRIANA",
+            lastName: "GONZALES",
+          },
+        },
+        {
+          id: "4",
+          dateOfBirth: "2022-10-11",
+          gender: "FEMALE",
+          contact: {
+            emailAddress: "jorge.gonzales833@telefonica.es",
+            phones: [
+              {
+                deviceType: "MOBILE",
+                countryCallingCode: "34",
+                number: "480080076",
+              },
+            ],
+          },
+          name: {
+            firstName: "ADRIANA",
+            lastName: "GONZALES",
+          },
+        }
       ],
       remarks: {
         general: [
