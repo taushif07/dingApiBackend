@@ -212,7 +212,7 @@ app.post("/shopping/flight-offers/pricing", async function (request, response) {
   });
 
   await amadeusFlightBookingPostAsync(
-    `/v1/shopping/flight-offers/pricing`,
+    `/v1/shopping/flight-offers/pricing?forceClass=false`,
     payload
   )
     .then((res) => {
