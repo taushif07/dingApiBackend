@@ -156,6 +156,7 @@ app.get("/amadeus-access-token", function (request, response) {
 
 //AMADEUS GET APIs
 
+// Amadeus flight booking get Api start
 app.post("/shopping/flight-offers", async function (request, response) {
   const destinationLocationCode = request?.body?.destinationLocationCode;
   const originLocationCode = request?.body?.originLocationCode;
@@ -189,9 +190,124 @@ app.post("/shopping/flight-offers", async function (request, response) {
   }
 });
 
+// Amadeus flight booking get Api end
+
+// Amadeus hotel booking get Api start
+
+app.post(`/hotels/by-city`, async function (request, response) {
+  const cityCode = request.body.cityCode;
+  const radius = request.body.radius;
+  const radiusUnit = request.body.radiusUnit;
+  const amenities = request.body.amenities;
+  const ratings = request.body.ratings;
+  const hotelSource = request.body.hotelSource;
+  // const cityCode = "BOM";
+  // const radius = "10";
+  // const radiusUnit = "KM";
+  // const amenities = request.body.amenities;
+  // const ratings = request.body.ratings;
+  // const hotelSource = "ALL";
+  try {
+    if (amenities && ratings) {
+      const res = await amadeusInstance.get(
+        `/v1/reference-data/locations/hotels/by-city?cityCode=${cityCode}&radius=${radius}&radiusUnit=${radiusUnit}&amenities=${amenities}&ratings=${ratings}&hotelSource=${hotelSource}`
+      );
+      const data = res?.data;
+      response.json(data);
+    } else if (amenities && !ratings) {
+      const res = await amadeusInstance.get(
+        `/v1/reference-data/locations/hotels/by-city?cityCode=${cityCode}&radius=${radius}&radiusUnit=${radiusUnit}&amenities=${amenities}&hotelSource=${hotelSource}`
+      );
+      const data = res?.data;
+      response.json(data);
+    } else if (ratings && !amenities) {
+      const res = await amadeusInstance.get(
+        `/v1/reference-data/locations/hotels/by-city?cityCode=${cityCode}&radius=${radius}&radiusUnit=${radiusUnit}&ratings=${ratings}&hotelSource=${hotelSource}`
+      );
+      const data = res?.data;
+      response.json(data);
+    } else if (!amenities && !ratings) {
+      const res = await amadeusInstance.get(
+        `/v1/reference-data/locations/hotels/by-city?cityCode=${cityCode}&radius=${radius}&radiusUnit=${radiusUnit}&hotelSource=${hotelSource}`
+      );
+      const data = res?.data;
+      response.json(data);
+    }
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+app.post(`/hotels/by-geocode`, async function (request, response) {
+  const latitude = request.body.latitude;
+  const longitude = request.body.longitude;
+  const radius = request.body.radius;
+  const radiusUnit = request.body.radiusUnit;
+  const amenities = request.body.amenities;
+  const ratings = request.body.ratings;
+  const hotelSource = request.body.hotelSource;
+  // const latitude = 19.09361;
+  // const longitude = 72.8549;
+  // const radius = 100;
+  // const radiusUnit = "KM";
+  // const amenities =
+  //   "SWIMMING_POOL, SPA, FITNESS_CENTER, AIR_CONDITIONING, RESTAURANT, PARKING, PETS_ALLOWED, AIRPORT_SHUTTLE, BUSINESS_CENTER, DISABLED_FACILITIES, WIFI, MEETING_ROOMS, NO_KID_ALLOWED, TENNIS, GOLF, KITCHEN, ANIMAL_WATCHING, BABY-SITTING, BEACH, CASINO, JACUZZI, SAUNA, SOLARIUM, MASSAGE, VALET_PARKING";
+  // const ratings = "5,4";
+  // const hotelSource = "ALL";
+  try {
+    if (amenities && ratings) {
+      const res = await amadeusInstance.get(
+        `/v1/reference-data/locations/hotels/by-geocode?latitude=${latitude}&longitude=${longitude}&radius=${radius}&radiusUnit=${radiusUnit}&amenities=${amenities}&ratings=${ratings}&hotelSource=${hotelSource}`
+      );
+      const data = res?.data;
+      response.json(data);
+    } else if (amenities && !ratings) {
+      const res = await amadeusInstance.get(
+        `/v1/reference-data/locations/hotels/by-geocode?latitude=${latitude}&longitude=${longitude}&radius=${radius}&radiusUnit=${radiusUnit}&amenities=${amenities}&hotelSource=${hotelSource}`
+      );
+      const data = res?.data;
+      response.json(data);
+    } else if (ratings && !amenities) {
+      const res = await amadeusInstance.get(
+        `/v1/reference-data/locations/hotels/by-geocode?latitude=${latitude}&longitude=${longitude}&radius=${radius}&radiusUnit=${radiusUnit}&ratings=${ratings}&hotelSource=${hotelSource}`
+      );
+      const data = res?.data;
+      response.json(data);
+    } else if (!amenities && !ratings) {
+      const res = await amadeusInstance.get(
+        `/v1/reference-data/locations/hotels/by-geocode?latitude=${latitude}&longitude=${longitude}&radius=${radius}&radiusUnit=${radiusUnit}&hotelSource=${hotelSource}`
+      );
+      const data = res?.data;
+      response.json(data);
+    }
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+app.post(`/hotel-offers`,async function (request, response) {
+  const hotelIds = request.body.hotelIds;
+  const adults = request.body.adults;
+  const checkInDate = request.body.checkInDate;
+  const checkOutDate = request.body.checkOutDate;
+  const roomQuantity = request.body.roomQuantity;
+  try {
+    const res = await amadeusInstance.get(`/v3/shopping/hotel-offers?hotelIds=${hotelIds}&adults=${adults}&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&roomQuantity=${roomQuantity}`);
+    const data = res?.data;
+    response.json(data);
+  } catch(error) {
+    console.error(error);
+    response.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+// Amadeus hotel booking get Api end
+
 //AMADEUS POST APIs
 
-const amadeusFlightBookingPostAsync = async (instance,endpoint, payload) => {
+const amadeusFlightBookingPostAsync = async (instance, endpoint, payload) => {
   try {
     const res = await instance.post(endpoint, payload);
     const data = res.data;
@@ -201,8 +317,6 @@ const amadeusFlightBookingPostAsync = async (instance,endpoint, payload) => {
     return error;
   }
 };
-
-
 
 app.post("/shopping/flight-offers/pricing", async function (request, response) {
   const flightOfferData = request.body.flightOfferData;
@@ -254,7 +368,11 @@ app.post("/booking/flight-orders", async function (request, response) {
     },
   });
 
-  await amadeusFlightBookingPostAsync(amadeusPostInstance,`/v1/booking/flight-orders`, payload)
+  await amadeusFlightBookingPostAsync(
+    amadeusPostInstance,
+    `/v1/booking/flight-orders`,
+    payload
+  )
     .then((res) => {
       response.json(res);
     })
