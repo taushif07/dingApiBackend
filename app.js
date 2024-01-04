@@ -190,6 +190,19 @@ app.post("/shopping/flight-offers", async function (request, response) {
   }
 });
 
+app.post(`/reference-data/airlines`,async function (request, response) {
+  const airlinesCodesArray = request.body.airlinesCodesArray;
+  const airlineCodes = airlinesCodesArray.join(",");
+  try {
+    const res = await amadeusInstance.get(`/v1/reference-data/airlines?airlineCodes=${airlineCodes}`);
+    const data = res.data;
+    response.json(data);
+  } catch(error) {
+    console.log(error);
+    response.status(500).json({message:"Internal Server Error"});
+  }
+});
+
 // Amadeus flight booking get Api end
 
 // Amadeus hotel booking get Api start
@@ -318,6 +331,8 @@ const amadeusFlightBookingPostAsync = async (instance, endpoint, payload) => {
   }
 };
 
+// Amadeus flight booking post api start
+
 app.post("/shopping/flight-offers/pricing", async function (request, response) {
   const flightOfferData = request.body.flightOfferData;
 
@@ -381,6 +396,8 @@ app.post("/booking/flight-orders", async function (request, response) {
       response.status(500).json({ message: "Internal Server Error" });
     });
 });
+
+// Amadeus flight booking post api end
 
 //Ding Get APIs
 
