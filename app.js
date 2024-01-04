@@ -190,16 +190,18 @@ app.post("/shopping/flight-offers", async function (request, response) {
   }
 });
 
-app.post(`/reference-data/airlines`,async function (request, response) {
+app.post(`/reference-data/airlines`, async function (request, response) {
   const airlinesCodesArray = request.body.airlinesCodesArray;
   const airlineCodes = airlinesCodesArray.join(",");
   try {
-    const res = await amadeusInstance.get(`/v1/reference-data/airlines?airlineCodes=${airlineCodes}`);
+    const res = await amadeusInstance.get(
+      `/v1/reference-data/airlines?airlineCodes=${airlineCodes}`
+    );
     const data = res.data;
     response.json(data);
-  } catch(error) {
+  } catch (error) {
     console.log(error);
-    response.status(500).json({message:"Internal Server Error"});
+    response.status(500).json({ message: "Internal Server Error" });
   }
 });
 
@@ -300,17 +302,19 @@ app.post(`/hotels/by-geocode`, async function (request, response) {
   }
 });
 
-app.post(`/hotel-offers`,async function (request, response) {
+app.post(`/hotel-offers`, async function (request, response) {
   const hotelIds = request.body.hotelIds;
   const adults = request.body.adults;
   const checkInDate = request.body.checkInDate;
   const checkOutDate = request.body.checkOutDate;
   const roomQuantity = request.body.roomQuantity;
   try {
-    const res = await amadeusInstance.get(`/v3/shopping/hotel-offers?hotelIds=${hotelIds}&adults=${adults}&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&roomQuantity=${roomQuantity}`);
+    const res = await amadeusInstance.get(
+      `/v3/shopping/hotel-offers?hotelIds=${hotelIds}&adults=${adults}&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&roomQuantity=${roomQuantity}`
+    );
     const data = res?.data;
     response.json(data);
-  } catch(error) {
+  } catch (error) {
     console.error(error);
     response.status(500).json({ message: "Internal Server Error" });
   }
