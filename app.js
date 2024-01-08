@@ -192,6 +192,7 @@ app.post("/shopping/flight-offers", async function (request, response) {
 
 app.post(`/reference-data/airlines`, async function (request, response) {
   const airlinesCodesArray = request.body.airlinesCodesArray;
+  console.log(`airlineCodepayload is`, airlinesCodesArray);
   const airlineCodes = airlinesCodesArray.join(",");
   try {
     const res = await amadeusInstance.get(
