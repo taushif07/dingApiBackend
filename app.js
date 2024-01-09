@@ -206,6 +206,27 @@ app.post(`/reference-data/airlines`, async function (request, response) {
   }
 });
 
+app.post(`/reference-data/locations`, async function (request, response) {
+  const subType = request.body.subType;
+  const keyword = request.body.keyword;
+  const limit = request.body.limit;
+  const view = request.body.view;
+  // const subType = "CITY";
+  // const keyword = "de";
+  // const limit = "20";
+  // const view = 'LIGHT';
+  try {
+    const res = await amadeusInstance.get(
+      `/v1/reference-data/locations?subType=${subType}&keyword=${keyword}&page%5Blimit%5D=${limit}&page%5Boffset%5D=0&sort=analytics.travelers.score&view=${view}`
+    );
+    const data = res.data;
+    response.json(data);
+  } catch (error) {
+    console.log(error);
+    response.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 // Amadeus flight booking get Api end
 
 // Amadeus hotel booking get Api start
