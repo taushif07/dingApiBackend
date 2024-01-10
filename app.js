@@ -154,6 +154,7 @@ app.get("/amadeus-access-token", function (request, response) {
     });
 });
 
+//<---------------------------------------------------------------------------------------------->
 //AMADEUS GET APIs
 
 // Amadeus flight booking get Api start
@@ -228,6 +229,8 @@ app.post(`/reference-data/locations`, async function (request, response) {
 });
 
 // Amadeus flight booking get Api end
+
+//<---------------------------------------------------------------------------------------------------------->
 
 // Amadeus hotel booking get Api start
 
@@ -344,6 +347,8 @@ app.post(`/hotel-offers`, async function (request, response) {
 
 // Amadeus hotel booking get Api end
 
+//<---------------------------------------------------------------------------------------------------------------------->
+
 //AMADEUS POST APIs
 
 const amadeusFlightBookingPostAsync = async (instance, endpoint, payload) => {
@@ -424,6 +429,54 @@ app.post("/booking/flight-orders", async function (request, response) {
 });
 
 // Amadeus flight booking post api end
+
+//<-------------------------------------------------------------------------------------------------->
+
+// Amadeus Hotel bookin post api start
+app.post(`/booking/hotel-bookings`, async function (request, response) {
+  const offerId = request?.body?.offerId;
+  const guests = request?.body?.guests;
+
+  const payload = JSON.stringify({
+    data: {
+      offerId: `${offerId}`,
+      guests: guests,
+      payments: [
+        {
+          id: 1,
+          method: "creditCard",
+          card: {
+            vendorCode: "VI",
+            cardNumber: "4151289722471370",
+            expiryDate: "2025-08",
+          },
+        },
+      ],
+      rooms: [
+        {
+          guestIds: [1],
+          paymentId: 1,
+          specialRequest: "I will arrive at midnight",
+        },
+      ],
+    },
+  });
+  await amadeusFlightBookingPostAsync(
+    amadeusPostInstance,
+    `/v1/booking/hotel-bookings`,
+    payload
+  )
+    .then((res) => {
+      response.json(res);
+    })
+    .catch((error) => {
+      console.error(error);
+      response.status(500).json({ message: "Internal Server Error" });
+    });
+});
+// Amadeus Hotel booking post api end
+
+//<-------------------------------------------------------------------------------------------------->
 
 //Ding Get APIs
 
