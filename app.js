@@ -171,19 +171,110 @@ app.post("/shopping/flight-offers", async function (request, response) {
     : "";
   const nonStop = request?.body?.nonStop;
   const max = request?.body?.max;
+  const includedAirlineCodes = request?.body?.includedAirlineCodes;
+  const maxPrice = request?.body?.maxPrice;
+  const currencyCode = request?.body?.currencyCode;
   try {
     if (request?.body?.returnDate) {
-      const res = await amadeusInstance.get(
-        `/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&returnDate=${returnDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}`
-      );
-      const data = res.data;
-      response.json(data);
+      if (includedAirlineCodes && !maxPrice && !currencyCode) {
+        const res = await amadeusInstance.get(
+          `/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&returnDate=${returnDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}&includedAirlineCodes=${includedAirlineCodes}`
+        );
+        const data = res.data;
+        response.json(data);
+      } else if (maxPrice && !includedAirlineCodes && !currencyCode) {
+        const res = await amadeusInstance.get(
+          `/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&returnDate=${returnDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}&maxPrice=${maxPrice}`
+        );
+        const data = res.data;
+        response.json(data);
+      } else if (currencyCode && !includedAirlineCodes && !maxPrice) {
+        const res = await amadeusInstance.get(
+          `/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&returnDate=${returnDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}&currencyCode=${currencyCode}`
+        );
+        const data = res.data;
+        response.json(data);
+      } else if (includedAirlineCodes && maxPrice && !currencyCode) {
+        const res = await amadeusInstance.get(
+          `/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&returnDate=${returnDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}&includedAirlineCodes=${includedAirlineCodes}&maxPrice=${maxPrice}`
+        );
+        const data = res.data;
+        response.json(data);
+      } else if (includedAirlineCodes && currencyCode && !maxPrice) {
+        const res = await amadeusInstance.get(
+          `/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&returnDate=${returnDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}&includedAirlineCodes=${includedAirlineCodes}&currencyCode=${currencyCode}`
+        );
+        const data = res.data;
+        response.json(data);
+      } else if (maxPrice && currencyCode && !includedAirlineCodes) {
+        const res = await amadeusInstance.get(
+          `/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&returnDate=${returnDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}&currencyCode=${currencyCode}&maxPrice=${maxPrice}`
+        );
+        const data = res.data;
+        response.json(data);
+      } else if (maxPrice && currencyCode && includedAirlineCodes) {
+        const res = await amadeusInstance.get(
+          `/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&returnDate=${returnDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}&includedAirlineCodes=${includedAirlineCodes}&currencyCode=${currencyCode}&maxPrice=${maxPrice}`
+        );
+        const data = res.data;
+        response.json(data);
+      } else if (!maxPrice && !currencyCode && !includedAirlineCodes) {
+        const res = await amadeusInstance.get(
+          `/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&returnDate=${returnDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}`
+        );
+        const data = res.data;
+        response.json(data);
+      }
     } else {
-      const res = await amadeusInstance.get(
-        `/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}`
-      );
-      const data = res.data;
-      response.json(data);
+      if (includedAirlineCodes && !maxPrice && !currencyCode) {
+        const res = await amadeusInstance.get(
+          `/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}&includedAirlineCodes=${includedAirlineCodes}`
+        );
+        const data = res.data;
+        response.json(data);
+      } else if (maxPrice && !includedAirlineCodes && !currencyCode) {
+        const res = await amadeusInstance.get(
+          `/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}&maxPrice=${maxPrice}`
+        );
+        const data = res.data;
+        response.json(data);
+      } else if (currencyCode && !includedAirlineCodes && !maxPrice) {
+        const res = await amadeusInstance.get(
+          `/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}&currencyCode=${currencyCode}`
+        );
+        const data = res.data;
+        response.json(data);
+      } else if (includedAirlineCodes && maxPrice && !currencyCode) {
+        const res = await amadeusInstance.get(
+          `/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}&includedAirlineCodes=${includedAirlineCodes}&maxPrice=${maxPrice}`
+        );
+        const data = res.data;
+        response.json(data);
+      } else if (includedAirlineCodes && currencyCode && !maxPrice) {
+        const res = await amadeusInstance.get(
+          `/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}&includedAirlineCodes=${includedAirlineCodes}&currencyCode=${currencyCode}`
+        );
+        const data = res.data;
+        response.json(data);
+      } else if (maxPrice && currencyCode && !includedAirlineCodes) {
+        const res = await amadeusInstance.get(
+          `/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}&currencyCode=${currencyCode}&maxPrice=${maxPrice}`
+        );
+        const data = res.data;
+        response.json(data);
+      } else if (maxPrice && currencyCode && includedAirlineCodes) {
+        const res = await amadeusInstance.get(
+          `/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}&includedAirlineCodes=${includedAirlineCodes}&currencyCode=${currencyCode}&maxPrice=${maxPrice}`
+        );
+        const data = res.data;
+        response.json(data);
+      } else if (!maxPrice && !currencyCode && !includedAirlineCodes) {
+        const res = await amadeusInstance.get(
+          `/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=${adults}&children=${children}&infants=${infants}&travelClass=${travelClass}&nonStop=${nonStop}&max=${max}`
+        );
+        const data = res.data;
+        response.json(data);
+      }
     }
   } catch (error) {
     console.error(error);
@@ -220,6 +311,18 @@ app.post(`/reference-data/locations`, async function (request, response) {
     const res = await amadeusInstance.get(
       `/v1/reference-data/locations?subType=${subType}&keyword=${keyword}&page%5Blimit%5D=${limit}&page%5Boffset%5D=0&sort=analytics.travelers.score&view=${view}`
     );
+    const data = res.data;
+    response.json(data);
+  } catch (error) {
+    console.log(error);
+    response.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+app.get(`/airlines`, async function (request, response) {
+  console.log(`[GET] ${request.url}`);
+  try {
+    const res = await amadeusInstance.get(`/v1/reference-data/airlines`);
     const data = res.data;
     response.json(data);
   } catch (error) {
